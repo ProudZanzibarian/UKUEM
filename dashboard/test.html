@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <title>Data Display</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  </head>
+  <style>
+    #calender {
+      background: url("../assets/images/shade.jpg");
+      background-size: cover;
+    }
+    #calender {
+      border-collapse: separate;
+    }
+    #calender th,
+    #calender td {
+      width: 20px;
+      border: 1.6px solid;
+      background-color: rgb(243, 241, 241);
+      padding: 2px 20px 2px;
+      vertical-align: middle; /* Center text vertically */
+    }
+
+    .no-data {
+      border: 0.1px solid rgba(0, 0, 0, 0.364) !important;
+      background-color: transparent !important;
+    }
+  </style>
+  <body>
+    <div class="container text-center">
+      <table class="table" id="calender">
+        <thead>
+          <tr>
+            <th scope="col">Year</th>
+            <th scope="col">January</th>
+            <th scope="col">February</th>
+            <th scope="col">March</th>
+            <th scope="col">April</th>
+            <th scope="col">May</th>
+            <th scope="col">June</th>
+            <th scope="col">July</th>
+            <th scope="col">August</th>
+            <th scope="col">September</th>
+            <th scope="col">October</th>
+            <th scope="col">November</th>
+            <th scope="col">December</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="row2022">
+            <th scope="row">2022</th>
+            <td>Maria Anders</td>
+            <td>Germany</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr id="row2023">
+            <th scope="row">2023</th>
+            <td></td>
+            <td></td>
+            <td>Francisco Chang</td>
+            <td>Mexico</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        function dataExists($element) {
+          return $.trim($element.text()) !== "";
+        }
+
+        $("#row2022 td").each(function () {
+          if (!dataExists($(this))) {
+            $(this).addClass("no-data");
+          }
+        });
+
+        $("#row2023 td").each(function () {
+          if (!dataExists($(this))) {
+            $(this).addClass("no-data");
+          }
+        });
+      });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="40.301346mm"
+   height="16.572083mm"
+   viewBox="0 0 40.301346 16.572083"
+   version="1.1"
+   id="svg5"
+   inkscape:export-filename="TSH.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false" />
+  <defs
+     id="defs2">
+    <rect
+       x="-820.13861"
+       y="7.1982932"
+       width="769.42157"
+       height="607.74823"
+       id="rect990" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(216.54346,-6.1014398)">
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="tsh"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:85.3333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';white-space:pre;shape-inside:url(#rect990);fill:#ffffff"
+       inkscape:export-filename="./tsh.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         x="-820.13867"
+         y="84.841869"
+         id="tspan1084">TSH</tspan></text>
+  </g>
+</svg>

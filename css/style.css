@@ -1,0 +1,493 @@
+@import url(https://fonts.googleapis.com/css?family=Dosis:300|Lato:300,400,600,700|Roboto+Condensed:300,700|Open+Sans+Condensed:300,600|Open+Sans:400,300,600,700|Maven+Pro:400,700);
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+
+:root {
+  --primary-color: #54b9cd;
+  --secondary-color: #79BC46;
+  --bg-color: #e9e4e4;
+  --content-bg-color: rgba(255, 255, 255, 0.7);
+  --nav-bg-color: rgba(205, 230, 204, 0.7);
+  --text-color: #555;
+}
+
+  
+body,html {
+  background-image: url("../dashboard/assets/images/bg.jpg");
+  padding: 0px;
+  margin: 0px;
+  font-family: "Open Sans";
+  font-size: 18px;}
+
+/* #dashboard {
+  display: none;
+} */
+
+.page {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  left: 10%;
+  top: 10%;
+  background-color: var(--content-bg-color);
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+}
+
+.main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  clear: both;
+  background-color: white;
+}
+
+.main .nav {
+  width: 200px;
+  height: 92%;
+  bottom: 0;
+  position: fixed;
+  float: left;
+  background-color: var(--nav-bg-color);
+}
+
+.main .nav .searchbox {
+  width: 170px;
+  height: 30px;
+  line-height: 30px;
+  margin: 15px;
+  background-color: White;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.main .nav .searchbox i {
+  display: inline-block;
+  color: #bbb;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 16px;
+}
+
+.main .nav .searchbox input {
+  display: inlin-block;
+  width: 120px;
+  background-color: White;
+  color: Black;
+  font-family: "Lato";
+  border: 0px;
+}
+
+.main .nav .menu {
+  width: 100%;
+  margin: 15px;
+  color: var(--text-color);
+}
+
+.main .nav .menu .title {
+  font-weight: 700;
+  font-size: 1.0em;
+  text-transform: uppercase;
+}
+
+.main .nav .menu ul {
+  padding-left: 0px;
+}
+
+.main .nav .menu ul li {
+  cursor: pointer;
+  list-style: none;
+  margin: 5px 0px;
+  padding: 5px 0px;
+  font-weight: 600;
+  margin-right: 30px;
+  padding-left: 10px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  transition: 0.25s all;
+}
+
+.main .nav .menu ul li.active {
+  color: var(--secondary-color);
+}
+
+.main .nav .menu ul li:hover {
+  background-color: #999;
+}
+
+.main .nav .menu ul li i {
+  font-size: 1.4em;
+  margin-right: 10px;
+}
+
+.main .view {
+  position: relative;
+  margin-left: 200px;
+}
+
+.viewHeader {
+  width: 100%;
+  height: 8%;
+  position: fixed;
+  z-index: 3;
+  line-height: 70px;
+  padding: 20px 20px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: var(--bg-color);
+  border-bottom: 1px solid #E0E0E0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.viewHeader .title {
+  float: left;
+  font-size: 1.4em;
+  font-weight: 400;
+  padding: 0px;
+  color: #AAA;
+  margin-top: -18px;
+}
+
+.viewHeader .functions {
+  float: right;
+}
+
+.viewHeader .functions .button {
+  float: right;
+  height: 30px;
+  line-height: 30px;
+  background-color: var(--primary-color);
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  margin: 0px 5px;
+  padding: 0px 20px;
+  cursor: pointer;
+  color: White;
+  font-weight: 700;
+}
+
+.viewHeader .functions .button.active {
+  background-color: var(--secondary-color);
+}
+
+.viewHeader .functions .button.inverz {
+  background-color: inherit;
+  border: 1px solid var(--text-color);
+  width: 10px;
+  color: var(--text-color);
+  font-size: 1.3em;
+  padding-left: 10px;
+  padding-right: 16px;
+}
+
+.main .view .content {
+  position: absolute;
+  left: 0px;
+  top: 70px;
+  right: 0px;
+  bottom: 0px;
+  padding: 10px;
+}
+
+
+/* Login Section */
+.form-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color:#f5f5f5 ;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 50px;
+  max-width: 800px;
+  text-align: center;
+}
+
+.form-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 10px;
+  align-items: center;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 16px;
+  display: block;
+  font-weight: 600;
+  margin: 0;
+}
+
+.form-group input {
+  width: 60%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+.full-name{
+  display: grid;
+  grid-template-columns: 1fr 2fr 3fr;
+  gap: 10px;
+  text-align: center;
+}
+
+.btn-submit {
+  background-color:#26a872;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+  background-color: green;
+}
+
+.form-links {
+  margin-top: 10px;
+}
+
+.form-links a {
+  color: #54b9cd;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-links a:hover {
+  text-decoration: underline;
+}
+
+/* Main Menu Card */
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.avatar {
+  text-align: center;
+}
+
+.avatar-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  /* Make the image rounded */
+  margin-bottom: 10px;
+}
+
+.dashboard {
+  display: flex;
+  justify-content: center;
+  /* Center horizontally */
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 800px;
+  /* Set a max width for the dashboard */
+  padding: 20px;
+}
+
+.left-column,
+.right-column {
+  flex-basis: calc(50% - 10px);
+  /* Two columns with 20px gap */
+}
+
+.card {
+  background-color: var(--content-bg-color);
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  color: var(--text-color);
+}
+
+.card h3 {
+  font-size: 18px;
+  margin: 10px 0;
+  color: var(--text-color);
+}
+
+.card p {
+  font-size: 14px;
+  color: #888;
+}
+
+.card-image {
+  max-width: 100px;
+  margin: 0 auto 10px;
+  display: block;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+/* Table  */
+.form-content {
+  background-color: rgba(232, 230, 230, 0.7);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 50px;
+  margin: 30px;
+  max-width: 100%;
+  text-align: center;
+}
+
+#postal-address,
+#telephone,
+#fax,
+#email-details {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+.list{
+  background-color: red;
+  height: 100%;
+}
+
+.list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.list th,
+.list td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.list .header th {
+  font-weight: bold;
+  color: #54b9cd;
+}
+
+.list .checked {
+  background-color: #f0f4f5;
+}
+
+.list .button {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.green {
+  background-color: #85c157;
+  color: white;
+}
+
+.button.pending {
+  background-color: #f39c12;
+  color: white;
+}
+   
+
+.form-step {
+  display: none;
+}
+
+.form-step:first-child {
+  display: block;
+}
+
+.form-navigation {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#prev-btn,
+#next-btn,
+#submit-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+#submit-btn {
+  background-color: #54b9cd;
+  color: #fff;
+}
+
+#prev-btn,
+#next-btn {
+  background-color: #aaa;
+}
+
+#prev-btn:hover,
+#next-btn:hover {
+  background-color: #777;
+}
+
+#submit-btn:hover {
+  background-color: #459da4;
+}
+
+h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+textarea {
+  resize: vertical;
+}
