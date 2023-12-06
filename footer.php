@@ -2,6 +2,7 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="./assets/js/script.js"></script>
+<!-- <script src="./css/style.js"></script> -->
 <script>
 
 </script>

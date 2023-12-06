@@ -9,5 +9,6 @@
     <!-- Your meta tags and stylesheets here -->
     <link rel="stylesheet" href="./css/toast.css">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./assets/css/all.min.css">
 
 </head>

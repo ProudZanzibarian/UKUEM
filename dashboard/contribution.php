@@ -1,13 +1,11 @@
 <?php
-session_start();
-include "./session.php";
 include("./header.php");
 include("./nav.php") ?>
 <div class="db-info-wrap">
     <div class="row">
         <div class="col-lg-12">
             <div class="dashboard-box">
-                <h4> Add Contribution </h4>
+                <h4> New Entry </h4>
                 <p> Contribute to our organization by adding a new entry. Use this form to provide details for the contribution you'd like to make. Please fill out the required information below to proceed. </p>
                 <form class="form-horizontal" id="user-registration">
                     <div class="row">

@@ -1,8 +1,11 @@
 <?php
-// session_start();
-// require_once "./session.php";
+
 require_once("./header.php");
-require_once("./nav.php") ?>
+if (!( $_SESSION["position"] == "head")) {
+    header("Location:../assets/APIs/logout.php");
+}
+require_once("./nav.php") 
+?>
 
 <div class="db-info-wrap">
     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -23,8 +26,8 @@ require_once("./nav.php") ?>
                     <i class="fa fa-users"></i>
                 </div>
                 <div class="dashboard-stat-content">
-                    <h4>Number Of Members</h4>
-                    <h5>100</h5>
+                    <h4>Total Members</h4>
+                    <h5 id="number_members"></h5>
                 </div>
             </div>
         </div>
@@ -60,25 +63,21 @@ require_once("./nav.php") ?>
                     Available Members
                 </div>
                 <div class="card-body">
-                <table class="table" id="table_item">
-                <thead>
-                    <tr>
-                        <th> Full Name </th>
-                        <th> username </th>
-                        <th> Phone Number </th>
-                        <th> Position </th>
-                        <th> Status </th>
-                        <th> Action </th>
-                    </tr>
-                </thead>
+                    <table class="table" id="table_item">
+                        <thead>
+                            <tr>
+                                <th> Full Name </th>
+                                <th> username </th>
+                                <th> Phone Number </th>
+                                <th> Position </th>
+                                <th> Status </th>
+                                <th> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody id="member_body">
 
-                <tr>
-
-                </tr>
-                <tbody id="depMember">
-
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

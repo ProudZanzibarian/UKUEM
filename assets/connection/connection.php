@@ -1,7 +1,7 @@
 <?php
 try {
     // Create a PDO instance
-    $conn = new PDO("mysql:host=127.0.0.1;dbname=zema_zeps", "root", "");
+    $conn = new PDO("mysql:host=127.0.0.1;dbname=ukuem-members", "root", "");
 
     // Set PDO to throw exceptions on errors
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

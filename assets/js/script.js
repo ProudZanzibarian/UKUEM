@@ -19,21 +19,86 @@ $(document).ready(function () {
     }
     console.log(permit);
 
-    $.ajax({
-      url: "../assets/APIs/apps/" + permit + ".php",
-      type: "GET",
-      dataType: "json",
-      success: function (data) {
-        if (data.length > 0) {
-          display_permit(data);
-        } else {
-          $("#permits").html("<h5>No Application found.</h5>");
+    function display_departments(data, total_members) {
+      var tBody = $("#departments");
+      $.each(data, function (index, department) {
+        $("#department_id").append(
+          $("<option>", {
+            value: department.department_id,
+            text: department.department_name,
+          })
+        );
+        tBody.append(`
+                  <tr class="permit-row" id="${department.department_id}" >
+                  <td>${department.department_id}</td>
+                    <td>
+                        </span><span class="list-enq-name">${department.department_name}</span>
+                    </td>
+                    <td>${department.head}</td>
+                    <td>${department.member_count}</td>
+                    <td><span class="badge badge-success" >Report</span></td>
+                  </tr>
+                  `);
+      });
+    }
+    function display_members(data) {
+      var mBody = $("#member_body");
+      $.each(data, function (index, member) {
+        $("#head").append(
+          $("<option>", {
+            value: member.id,
+            text: member.first_name + " " + member.last_name,
+          })
+        );
+        mBody.append(`
+                  <tr class="permit-row" id="${member.id}" >
+                    <td>
+                        <span class="list-img"><img src="../assets/images/clients/default.png" alt="">
+                        </span><span class="list-enq-name">${
+                          member.first_name +
+                          " " +
+                          member.middle_name +
+                          " " +
+                          member.last_name
+                        }</span>
+                    </td>
+                    <td>${member.user_name}</td>
+                    <td>${member.phone_number}</td>
+                    <td>${member.position}</td>
+                    <td>${member.member_status}</td>
+                    <td><span class="badge badge-success">Report</span></td>
+                  </tr>
+                  `);
+      });
+    }
+
+    $.getJSON("../assets/APIs/apps/fetch_app.php", function (response) {
+      if (response.success) {
+        var departments = response.departments;
+        var members = response.members;
+        console.log(response.memberCounts);
+
+        if (departments.length > 0 || members.length > 0) {
+          if (members.length > 0) {
+            console.log("members Hello");
+            display_members(members);
+            $("#number_members").html(`<h5>${members.length}</h5>`);
+          } else {
+            $("#member_body").html("<h5>No Member found.</h5>");
+          }
+
+          if (departments.length > 0) {
+            display_departments(departments, members.length);
+            $("#total_departments").html(`<h5>${departments.length}</h5>`);
+          } else {
+            $("#departments").html("<h5>No Department found.</h5>");
+          }
         }
-      },
-      error: function (xhr, status, error) {
-        $("#permits").html("<p>Error fetching data.</p>");
-        console.log("error", error);
-      },
+      }
+    }).fail(function (xhr, status, error) {
+      $("#members").html("<p>Error fetching data.</p>");
+      $("#total_members").html("<p>Error fetching data.</p>");
+      console.error("Ajax error:", error);
     });
   }
   // Approval Button
@@ -248,87 +313,21 @@ $(document).ready(function () {
     window.location.href = "./permits.php?permit=" + encodeURIComponent(permit);
   });
 
-  function display_permit(data) {
-    var tBody = $("#permits");
-    $.each(data, function (index, permits) {
-      if (permits.app_status_id === 4) {
-        tBody.append(`
-                <tr class="permit-row" id="manager${permits.app_id}" >
-                  <td>
-                      <span class="list-img"><img src="../assets/images/clients/default.png" alt="">
-                      </span><span class="list-enq-name">${
-                        (permits.first_name, permits.last_name)
-                      }</span>
-                  </td>
-                  <td>${permits.app_name}</td>
-                  <td>${permits.phone_number}</td>
-                  <td>${permits.app_date}</td>
-                  <td><span class="badge badge-success">"Approved"</span></td>
-                </tr>
-                `);
-      } else if (permits.app_status_id === 2) {
-        tBody.append(`
-                <tr class="permit_row" id="incoming${permits.app_id}" >
-                  <td>
-                      <span class="list-img"><img src="../assets/images/clients/default.png" alt="">
-                      </span><span class="list-enq-name">${
-                        (permits.first_name, permits.last_name)
-                      }</span>
-                  </td>
-                  <td>${permits.app_name}</td>
-                  <td>${permits.phone_number}</td>
-                  <td>${permits.app_date}</td>
-                  <td><span class="badge badge-primary">"Pending"</span></td>
-                </tr>
-                `);
-      } else if (permits.app_status_name === "Incomplete") {
-        tBody.append(`
-                <tr class="permit-row" id="incoming${permits.app_id}" >
-                  <td>
-                      <span class="list-img"><img src="../assets/images/clients/default.png" alt="">
-                      </span><span class="list-enq-name">${
-                        (permits.first_name, permits.last_name)
-                      }</span>
-                  </td>
-                  <td>${permits.app_name}</td>
-                  <td>${permits.phone_number}</td>
-                  <td>${permits.app_date}</td>
-                  <td><span class="badge badge-secondary">"Incomplete"</span></td>
-                </tr>
-                `);
-      } else if (permits.app_status_name === "Rejected") {
-        tBody.append(`
-                <tr class="permit-row" id="incoming${permits.app_id}">
-                  <td>
-                      <span class="list-img"><img src="../assets/images/clients/default.png" alt="">
-                      </span><span class="list-enq-name">${
-                        (permits.first_name, permits.last_name)
-                      }</span>
-                  </td>
-                  <td>${permits.app_name}</td>
-                  <td>${permits.phone_number}</td>
-                  <td>${permits.app_date}</td>
-                  <td><span class="badge badge-danger">"Rejected"</span></td>
-                </tr>
-                `);
-      }
-    });
-  }
-
   // ----------------------------------
   // Users / Workers
   // ----------------------------------
 
-  var users = getQueryParam("users");
-  $(".users-header").text(users + " Staff(s)");
-  $(".users-desc").text(
-    "These are the collection of " + users + " Staff(s) available."
+  var members = getQueryParam("members");
+  $(".members-header").text(members + " Member(s)");
+  $(".members-desc").text(
+    "These are the collection of " + members + " Member(s) available."
   );
 
   $(document).on("click", "#user", function (e) {
     e.preventDefault();
-    var users = $(this).data("filter");
-    window.location.href = "./users.php?users=" + encodeURIComponent(users);
+    var members = $(this).data("filter");
+    window.location.href =
+      "./members.php?members=" + encodeURIComponent(members);
   });
   $(document).on("click", "#change_status", function (e) {
     e.preventDefault();
@@ -434,141 +433,150 @@ $(document).ready(function () {
   });
 
   // Function to fetch and display department members
-  function fetchAndDisplayUsers() {
-    $.ajax({
-      url: "../assets/APIs/users/.php",
-      type: "GET",
-      dataType: "json",
-      success: function (data) {
-        if (data.length > 0) {
-          displayUsers(data);
-        } else {
-          $("#depMember").html("<h5>No Staff found.</h5>");
-        }
-      },
-      error: function (xhr, status, error) {
-        $("#depMember").html("<p>Error fetching data.</p>");
-        console.log("error", error);
-      },
-    });
-  }
+  // function fetchAndDisplayUsers() {
+  //   $.ajax({
+  //     url: "../assets/APIs/users/.php",
+  //     type: "GET",
+  //     dataType: "json",
+  //     success: function (data) {
+  //       if (data.length > 0) {
+  //         displayUsers(data);
+  //       } else {
+  //         $("#depMember").html("<h5>No Staff found.</h5>");
+  //       }
+  //     },
+  //     error: function (xhr, status, error) {
+  //       $("#depMember").html("<p>Error fetching data.</p>");
+  //       console.log("error", error);
+  //     },
+  //   });
+  // }
 
   // Function to display department members in the table
-  function displayUsers(data) {
-    var tBody = $("#depMember");
-    $.each(data, function (index, user) {
-      var user_status_name =
-        user.user_status_name === "Active" ? "danger" : "success";
-      var user_action =
-        user.user_status_name === "Active" ? "success" : "danger";
-      var user_status_action =
-        user.user_status_name === "Active" ? "Inactive" : "Enable";
-      var popover_content =
-        user.user_status_name === "Active" ? "Inactive" : "Enable";
+  // function displayUsers(data) {
+  //   var tBody = $("#depMembers");
+  //   $.each(data, function (index, user) {
+  //     var user_status_name =
+  //       user.user_status_name === "Active" ? "danger" : "success";
+  //     var user_action =
+  //       user.user_status_name === "Active" ? "success" : "danger";
+  //     var user_status_action =
+  //       user.user_status_name === "Active" ? "Inactive" : "Enable";
+  //     var popover_content =
+  //       user.user_status_name === "Active" ? "Inactive" : "Enable";
 
-      tBody.append(`
-              <tr>
-                  <td>
-                      <span class="list-img"><img src="../assets/images/clients/default.png" alt=""></span>
-                      <span class="list-enq-name">${user.first_name}, ${user.middle_name}, ${user.last_name}</span>
-                  </td>
-                  <td>${user.username}</td>
-                  <td>${user.phone_no}</td>
-                  <td>${user.position}</td>
-                  <td id="status-cell"><span class="badge badge-${user_action}">${user.member_status}</span></td>
-                  <td>
-                      <button class="btn btn-primary badge badge-${user_status_name}" 
-                      data-toggle="popover" data-placement="left" data-trigger="hover" data-content="${popover_content}" 
-                          id="change_status" data-user="user" data-status="${user.user_status_id}" 
-                          data-id="${user.user_id}">
-                          ${user_status_action}
-                      </button>
-                      <button class="btn btn-primary badge badge-danger" 
-                          data-toggle="popover" data-content="Reset password" id="reset_password"
-                          data-placement="bottom" data-trigger="hover" data-user="user" data-id="${client.client_id}">
-                          <i class="fa fa-undo"></i>
-                      </button>
-                  </td>
-              </tr>
-          `);
-    });
+  //     tBody.append(`
+  //             <tr>
+  //                 <td>
+  //                     <span class="list-img"><img src="../assets/images/clients/default.png" alt=""></span>
+  //                     <span class="list-enq-name">${user.first_name}, ${user.middle_name}, ${user.last_name}</span>
+  //                 </td>
+  //                 <td>${user.username}</td>
+  //                 <td>${user.phone_no}</td>
+  //                 <td>${user.position}</td>
+  //                 <td id="status-cell"><span class="badge badge-${user_action}">${user.member_status}</span></td>
+  //                 <td>
+  //                     <button class="btn btn-primary badge badge-${user_status_name}"
+  //                     data-toggle="popover" data-placement="left" data-trigger="hover" data-content="${popover_content}"
+  //                         id="change_status" data-user="user" data-status="${user.user_status_id}"
+  //                         data-id="${user.user_id}">
+  //                         ${user_status_action}
+  //                     </button>
+  //                     <button class="btn btn-primary badge badge-danger"
+  //                         data-toggle="popover" data-content="Reset password" id="reset_password"
+  //                         data-placement="bottom" data-trigger="hover" data-user="user" data-id="${client.client_id}">
+  //                         <i class="fa fa-undo"></i>
+  //                     </button>
+  //                 </td>
+  //             </tr>
+  //         `);
+  //   });
 
-    $('[data-toggle="popover"]').popover();
-  }
+  //   $('[data-toggle="popover"]').popover();
+  // }
 
   // Initial fetch and display of user data
-  fetchAndDisplayUsers();
+  // fetchAndDisplayUsers();
 
   // ----------------------------------
   // Users / Client
   // ----------------------------------
 
-  var clients = getQueryParam("clients");
-  $(".clients-header").text(clients + " Client(s)");
-  $(".clients-desc").text(
-    "These are the collection of " + clients + " Client(s) available."
+  var member = getQueryParam("members");
+  $(".member-header").text(member + " Member(s)");
+  $(".member-desc").text(
+    "These are the collection of " + member + " Member(s) available."
   );
 
-  $(document).on("click", "#client", function (e) {
+  $(document).on("click", "#members", function (e) {
     e.preventDefault();
-    var clients = $(this).data("filter");
+    var member = $(this).data("filter");
     window.location.href =
-      "./client.php?clients=" + encodeURIComponent(clients);
+      "./members.php?members=" + encodeURIComponent(member);
   });
 
   // Function to fetch and display client data
-  function fetchAndDisplayclients() {
-    $.ajax({
-      url: "../assets/APIs/clients/" + clients + ".php",
-      type: "GET",
-      dataType: "json",
+  function fetchAndDisplayMembers() {
+    var member = getQueryParam("members");
+    $.getJSON({
+      url: "../assets/APIs/users/" + member + ".php",
       success: function (data) {
         if (data.length > 0) {
-          displayclients(data);
+          display_members(data);
         } else {
-          $("#clients").html("<h5>No Client found.</h5>");
+          $("#depMembers").html("<h5>No Member found.</h5>");
         }
       },
       error: function (xhr, status, error) {
-        $("#clients").html("<p>Error fetching data.</p>");
+        $("#depMembers").html("<p>Error fetching data.</p>");
         console.log("error", error);
       },
     });
   }
 
   // Function to display clients in the table
-  function displayclients(data) {
-    var tBody = $("#clients");
-    $.each(data, function (index, client) {
-      var client_status_name =
-        client.user_status_name === "Active" ? "success" : "danger";
-      var client_action =
-        client.user_status_name === "Active" ? "danger" : "success";
-      var client_status_action =
-        client.user_status_name === "Active" ? "Disable" : "Enable";
+  function display_members(data) {
+    var tBody = $("#depMembers");
+    $.each(data, function (index, members) {
+      var members_status_name =
+        members.member_status_name === "Active" ? "success" : "danger";
+      var members_action =
+        members.member_status_name === "Active" ? "danger" : "success";
+      var members_status_action =
+        members.member_status_name === "Active" ? "Inactive" : "Enable";
       var popover_content =
-        client.user_status_name === "Active" ? "Disable" : "Enable";
+        members.member_status_name === "Active" ? "Inactive" : "Enable";
 
       tBody.append(`
               <tr>
                   <td>
-                      <span class="list-img"><img src="../assets/images/client/default.png" alt=""></span>
-                      <span class="list-enq-name">${client.first_name}, ${client.last_name}</span>
+                      <span class="list-img"><img src="../assets/images/members/default.png" alt=""></span>
+                      <span class="list-enq-name">${
+                        members.first_name +
+                        " " +
+                        member.middle_name +
+                        " " +
+                        members.last_name
+                      }</span>
                   </td>
-                  <td>${client.username}</td>
-                  <td>${client.phone_number}</td>
-                  <td>${client.position}</td>
-                  <td id="status-cell"><span class="badge badge-${client_status_name}">${client.user_status_name}</span></td>
+                  <td>${members.username}</td>
+                  <td>${members.phone_number}</td>
+                  <td>${members.position}</td>
+                  <td id="status-cell"><span class="badge badge-${members_status_name}">${members.user_status_name}</span></td>
                   <td>
-                      <button class="btn btn-primary badge badge-${client_action}" 
+                      <button class="btn btn-primary badge badge-${members_action}" 
                       data-toggle="popover" data-placement="left" data-trigger="hover" data-content="${popover_content}" 
-                          id="change_status" data-user="client" data-status="${client.user_status_id}" 
-                          data-id="${client.client_id}">
-                          ${client_status_action}
+                          id="change_status" data-user="members" data-status="${
+                            members.user_status_id
+                          }" 
+                          data-id="${members.members_id}">
+                          ${members_status_action}
                       </button>
                       <button class="btn btn-primary badge badge-danger" 
                           data-toggle="popover" data-content="Reset password" id="reset_password"
-                          data-placement="bottom" data-trigger="hover" data-user="client" data-id="${client.client_id}">
+                          data-placement="bottom" data-trigger="hover" data-user="members" data-id="${
+                            client.client_id
+                          }">
                           <i class="fa fa-undo"></i>
                       </button>
                   </td>
@@ -580,43 +588,28 @@ $(document).ready(function () {
   }
 
   // Initial fetch and display of client data
-  fetchAndDisplayclients();
+  fetchAndDisplayMembers();
 
   // ----------------------
-  //  Login Admin Section
+  //  Login Section
   // ----------------------
 
-  $(document).on("submit", "#admin-login-form-content", function (e) {
+  $(document).on("submit", "#login-form-content", function (e) {
     e.preventDefault();
 
     var formData = $(this).serialize();
-
+console.log(formData);
     $.ajax({
       type: "POST",
-      url: "dashboard/assets/APIs/admin_login_script.php",
+      url: "../assets/APIs/login.php",
       data: formData,
       dataType: "json",
       success: function (response) {
         if (response.success) {
-          if (response.position == "Admin") {
-            console.log("Login Success");
-            toastr.success("Login Success");
-            $("#admin-login-form-content")[0].reset();
-            window.location.replace("dashboard/super_admin/index.php");
-          } else if (response.position == "Inspector") {
-            console.log("Login Success");
-            toastr.success("Login Success");
-            $("#admin-login-form-content")[0].reset();
-            window.location.replace("dashboard/inspector/index.php");
-          } else if (response.position == "Manager") {
-            console.log("Login Success");
-            toastr.success("Login Success");
-            $("#admin-login-form-content")[0].reset();
-            window.location.replace("dashboard/manager/index.php");
-          }
-        } else {
-          console.log("Login Failed " + response.message);
-          toastr.error("Login failed " + response.message);
+          console.log("Login Success");
+          toastr.success("Login Success");
+          $("#login-form-content")[0].reset();
+          window.location.replace("dashboard/index.php");
         }
       },
       error: function (xhr, status, error) {
@@ -632,158 +625,53 @@ $(document).ready(function () {
 
   $(document).on("click", "#sign-out-link", function (event) {
     event.preventDefault();
-    window.location.replace("../assets/APIs/logout.php");
-  });
-
-  // Iron Scraper
-  $("#iron-scraper-permit-form").submit(function (e) {
-    e.preventDefault();
-
-    var formData = $(this).serialize();
-
-    $.ajax({
-      type: "POST",
-      url: "../handlers/iron-scraper.php",
-      data: formData,
-      dataType: "json",
-      success: function (response) {
-        if (response.success) {
-          $("#iron-scraper-permit-form")[0].reset();
-          toastr.success("Iron-Scraper Data submitted successfully.");
-        } else {
-          toastr.error(
-            "An error occurred while processing Iron Scraper application. Please review your information and try again later."
-          );
-        }
-      },
-      error: function (xhr, status, error) {
-        console.log("An error occurred while processing Server:", error);
-        toastr.error(
-          "An error occurred while processing your request. Please try again later."
-        );
-      },
-    });
-  });
-
-  // Registration
-  $("#register-form-content").submit(function (e) {
-    e.preventDefault();
-
-    var formData = new FormData(this);
-
-    $.ajax({
-      type: "POST",
-      url: "../client/registration.php",
-      data: formData,
-      contentType: false,
-      processData: false,
-      success: function (response) {
-        if (response.success) {
-          console.log(response.success);
-          toastr.success("Registration Success");
-        } else {
-          console.log("Registration Failed:", response.message);
-          toastr.error("Registration Failed");
-        }
-      },
-      error: function (xhr, status, error) {
-        console.error("Server Error:", error);
-        toastr.error("Something Went Wrong, try again.");
-      },
-    });
-  });
-
-  // ----------------------
-  //      Register Client Section
-  // ----------------------
-  $("#client-registration").validate({
-    rules: {
-      first_name: "required",
-      middle_name: "required",
-      last_name: "required",
-      address: "required",
-      email: {
-        required: true,
-        email: true,
-      },
-      phone_number: "required",
-      username: "required",
-      profile_photo: "required",
-      "register-ids": "required",
-      "register-national-id": {
-        required: function () {
-          return $("#register-ids").val() === "national-id";
-        },
-      },
-      "register-zan-id": {
-        required: function () {
-          return $("#register-ids").val() === "zan-id";
-        },
-      },
-      "register-passport": {
-        required: function () {
-          return $("#register-ids").val() === "passport";
-        },
-      },
-      id_number: "required",
-      nationality: "required",
-      password: "required",
-      confirm_password: {
-        required: true,
-        equalTo: "#password",
-      },
+      $.ajax({
+    type: "POST",
+    url: "../assets/APIs/logout.php",
+    error: function (xhr, status, error) {
+      console.error("Ajax error:", error);
     },
-    messages: {
-      confirm_password: {
-        equalTo: "Passwords do not match.",
-      },
-    },
-    submitHandler: function (form, event) {
-      event.preventDefault();
-
-      if ($("#client-registration").valid()) {
-        $.ajax({
-          type: "POST",
-          url: "./assets/APIs/clients/registration.php",
-          data: $(form).serialize(),
-          success: function (response) {
-            if (response.success) {
-              console.log(response);
-              toastr.success("Client registered successfully");
-              $(this)[0].reset();
-            } else {
-              toastr.error("Something went wrong");
-            }
-          },
-          error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-            toastr.success("Error :", error);
-          },
-        });
-      }
-    },
+  });
   });
 
   // ----------------------
   //      Register Staff Section
   // ----------------------
+  $.validator.addMethod(
+    "dateBeforeCurrent",
+    function (value, element) {
+      // Parse the date values
+      var currentDate = new Date();
+      var selectedDate = new Date(value);
+
+      // Compare the dates
+      return selectedDate < currentDate;
+    },
+    "Please select a date before the current date."
+  );
   $("#user-registration").validate({
     rules: {
+      member_id: "required",
       first_name: "required",
       middle_name: "required",
       last_name: "required",
-      address: "required",
+      user_name: "required",
+      password: "required",
       email: {
         required: true,
         email: true,
       },
-      phone_no: "required",
-      username: "required",
-      pwd: "required",
-      confirm_password: {
+      phone_number: "required",
+      position: "required",
+      date_of_joining: {
         required: true,
-        equalTo: "#pwd",
+        dateBeforeCurrent: true,
       },
+      position_in_ukeum: "required",
+      department_id: "required",
+    },
+    messages: {
+      department_id: "Please select a department.",
     },
     messages: {
       confirm_password: {
@@ -800,6 +688,7 @@ $(document).ready(function () {
           if (response.success) {
             toastr.success("User Registered successfully.");
             console.log("User Registered successfully.");
+            $(this)[0].reset();
           } else {
             toastr.error("Error: " + response.error);
             console.error("Error: " + response.error);

@@ -1,65 +1,59 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+session_start();
+require("../../connection/connection.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Assuming you have a database connection established already
-    require("../../connection/connection.php");
+// Fetch all members
+$stmt = $conn->prepare("SELECT * FROM members");
+$stmt->execute();
+$members = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $app_type = $_POST['app_type'];
-    $app_id = $_POST['app_id'];
+// Fetch all departments
+$stmt = $conn->prepare("SELECT * FROM department");
+$stmt->execute();
+$departments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $validTables = array('plastic', 'iron', 'disposal', 'eia');
+// Initialize an array to store member counts for each department
+$memberCounts = array();
 
-    if (!in_array($app_type, $validTables)) {
-        $response = array(
-            'success' => false,
-            'message' => 'Invalid Application Name provided.'
-        );
-        echo json_encode($response);
-        exit;
-    }
+// Iterate through departments to get member counts
+foreach ($departments as $department) {
+    $departmentId = $department['department_id'];
 
-    // Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("SELECT * FROM " . $app_type . "_permit p, tb_vendor v WHERE p.vendor_id = v.vendor_id AND p.vendor_id = ?");
-    $stmt->bindParam(1, $app_id, PDO::PARAM_INT);
+    // Use a placeholder for the count alias, and bind the actual values
+    $stmt = $conn->prepare("SELECT COUNT(*) as member_count FROM members WHERE department_id = ?");
+    $stmt->bindParam(1, $departmentId, PDO::PARAM_INT);
+
+    // Execute the query
     $stmt->execute();
 
-    if ($stmt->rowCount() > 0) {
-        
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if (!empty($result)) {
-            $response = array(
-                "success" => true,
-                "data" => $result,
-            );
+    // Fetch the result
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            echo json_encode($response);
-        } else {
-            $response = array(
-                "success" => false,
-                "message" => "Error Fetching data not found"
-            );
+    // Access the count value using the alias
+    $memberCount = $result['member_count'];
 
-            echo json_encode($response);
-        }
-    } else {
-        // Application data not found
-        $response = array(
-            "success" => false,
-            "message" => "Application data not found"
-        );
-
-        echo json_encode($response);
-    }
-
-    $stmt = null;
-    $conn = null;
-} else {
-    $response = array(
-        "success" => false,
-        "message" => "Invalid request"
-    );
-
-    echo json_encode($response);
+    // Store the member count in the array
+    $memberCounts[$departmentId] = $memberCount;
 }
+
+// Merge the memberCounts array with the departments array
+foreach ($departments as &$department) {
+    $departmentId = $department['department_id'];
+
+    // Add the member count to the department
+    $department['member_count'] = $memberCounts[$departmentId];
+}
+
+// Add the memberCounts array to the response
+$response = array('success' => true, 'members' => $members, 'departments' => $departments);
+
+// Return the data as JSON
+header("Content-Type: application/json");
+echo json_encode($response);
+
+// Clean up
+$stmt = null;
+$conn = null;
+?>

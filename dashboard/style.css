@@ -2191,6 +2191,8 @@ login form css
   transition: all 0.3s ease;
   color: var(--text-color);
   margin-top: 20px;
+  max-height: 470px;
+  overflow-y: auto;
 }
 
 .card h3 {
@@ -2210,7 +2212,7 @@ login form css
   display: block;
 }
 .card-body {
-  max-height: 300px;
+  /* max-height: 300px; */
   overflow-y: auto;
 }
 
@@ -2304,6 +2306,7 @@ login form css
   background: url("../assets/images/shade.png");
   background-color: #e7eaeb;
   width: 100%;
+  overflow: auto;
 }
 #calender {
   border-collapse: separate;

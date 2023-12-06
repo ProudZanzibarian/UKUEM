@@ -1,6 +1,4 @@
 <?php
-// session_start();
-// require_once "./session.php";
 require_once("./header.php");
 require_once("./nav.php") ?>
 
@@ -26,7 +24,7 @@ require_once("./nav.php") ?>
                     <i class="fas fa-dollar-sign"></i>
                 </div>
                 <div class="dashboard-stat-content">
-                    <h4>Total Contribution </h4>
+                    <h4> Monthly Charge </h4>
                     <h5> 5,200</h5>
                 </div>
             </div>
@@ -51,17 +49,21 @@ require_once("./nav.php") ?>
                     MY DETAILS
                 </div>
                 <div class="card-body">
-                    <img src="../assets/images/default.png" alt="..." class="rounded-pill" style="width:30%;height: 30%;padding-bottom:20px;">
+                    <img src="../assets/images/default.png" alt="..." class="rounded-pill" style="width:20%;height: 20%;padding-bottom:20px;">
                     <h3>USAMA TALIB JUMA</h3>
                     <table style="margin:auto;">
+
                         <tr>
-                            <th>Member No:</th>
-                            <td>444444400</td>
+                            <th>Department: </th>
+                            <td> Elimu Na Daawah </td>
                         </tr>
                         <tr>
-                            <th>Birth Date:</th>
-                            <td>19-7-1999</td>
-                        </tr>
+                            <th>
+                                POST:
+                            </th>
+                            <td style="text-align:left;">
+                                Amiri
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -76,12 +78,12 @@ require_once("./nav.php") ?>
                                 <th>
                                     <h5>
                                         <i class="fa fa-hotel"></i>
-                                        Emloyer ID:
+                                        Member No::
                                     </h5>
                                 </th>
                                 <td>
                                     <p>
-                                        78787899
+                                    444444400
                                     </p>
                                 </td>
                             </tr>

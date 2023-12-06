@@ -1,25 +1,19 @@
 <?php include("./head.php"); ?>
 
 <body>
-    <div class="content">
-        <div class="form-container" id="login-form">
-            <span class="form">
-            <h2>Zanzibar Enviroment Permit System</h2>
-                <img src="dashboard/assets/images/SMZ.png" class="img-responsive" style=" border-radius:10%; width:150px;" /><br />
-                <h3>Internal-Portal</h3>
-            </span>
-            <form id="admin-login-form-content" style="margin-top: 20px;">
-                <div class="form-group">
-                    <label for="login-username">Username</label>
-                    <input type="text" id="login-username" name="username" placeholder="Username" style="width: 250px;" required>
+    <div class="wrapper">
+        <div class="login">
+            <div class="profile"><i class="fa fa-camera fa-2x"></i></div>
+            <form id="login-form-content">
+                <div class="form-element">
+                    <span><i class="fa fa-envelope"></i></span><input type="text" name="user_name" placeholder="Your Email Address" />
                 </div>
-                <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" name="password" placeholder="Password" style="width: 250px;" required>
+                <div class="form-element">
+                    <span><i class="fa fa-lock"></i></span><input type="password" name="password" placeholder=" Password" />
                 </div>
-                <input type="submit" id="login" class="btn-primary btn-submit" name="submit" value="Log In" />
+                <button type="submit" class="btn-login">login</button>
             </form>
         </div>
-      
     </div>
+    
     <?php include("./footer.php") ?>

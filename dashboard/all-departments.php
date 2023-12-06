@@ -1,6 +1,4 @@
 <?php
-// session_start();
-// require_once "./session.php";
 require_once("./header.php");
 require_once("./nav.php") ?>
 
@@ -18,19 +16,31 @@ require_once("./nav.php") ?>
 
     <div class="row">
         <!-- Item -->
-        <div class="col-xl-4 col-sm-6">
+        <div class="col-xl-3 col-sm-6">
+            <div class="db-info-list">
+                <div class="dashboard-stat-icon bg-blue">
+                    <i class="fa fa-building"></i>
+                </div>
+                <div class="dashboard-stat-content">
+                    <h4>Number Of Departments</h4>
+                    <h5 id="total_departments" ></h5>
+                </div>
+            </div>
+        </div>
+        <!-- Item -->
+        <div class="col-xl-3 col-sm-6">
             <div class="db-info-list">
                 <div class="dashboard-stat-icon bg-blue">
                     <i class="fa fa-users"></i>
                 </div>
                 <div class="dashboard-stat-content">
-                    <h4>Number Of Departments</h4>
-                    <h5>100</h5>
+                    <h4>Number Of Members</h4>
+                    <h5 id="number_members" ></h5>
                 </div>
             </div>
         </div>
         <!-- Item -->
-        <div class="col-xl-4 col-sm-6">
+        <div class="col-xl-3 col-sm-6">
             <div class="db-info-list">
                 <div class="dashboard-stat-icon bg-green">
                     <i class="fas fa-donate"></i>
@@ -42,7 +52,7 @@ require_once("./nav.php") ?>
             </div>
         </div>
         <!-- Item -->
-        <div class="col-xl-4 col-sm-6">
+        <div class="col-xl-3 col-sm-6">
             <div class="db-info-list">
                 <div class="dashboard-stat-icon bg-purple">
                     <i class="fa fa-truck-loading"></i>
@@ -60,7 +70,7 @@ require_once("./nav.php") ?>
                 <div class="card-header">
                     Available Departments
                 </div>
-                <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                <div class="card-body">
                     <table class="table" id="table_item">
                         <thead>
                             <tr>
@@ -76,7 +86,7 @@ require_once("./nav.php") ?>
                         <tr>
 
                         </tr>
-                        <tbody id="dep">
+                        <tbody id="departments">
 
                         </tbody>
                     </table>

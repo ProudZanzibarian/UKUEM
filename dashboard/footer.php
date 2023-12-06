@@ -15,11 +15,11 @@
             <script src="../assets/js/bootstrap.min.js"></script>
             <script src="../assets/js/canvasjs.min.js"></script>
             <script src="./assets/js/chart.js"></script>
-            <script src="../assets/js/counterup.min.js"></script>
             <script src="../assets/js/jquery.slicknav.js"></script>
             <script src="../assets/js/dashboard-custom.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
             <script src="../assets/js/script.js"></script>
+            <!-- <script src="../assets/js/counterup.min.js"></script> -->
 
 
             </body>
